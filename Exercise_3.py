@@ -21,8 +21,16 @@ Output: 5
 Explanation: Your function can return either index number 1 where the peak element is 2, or index number 5 where the peak element is 6.
 
 Solution:
+1. Using binary search, we can solve this using 3 cases.
+    a) If mid is greater than neighboring elements, then mid is a peak.
+    b) If there is a larger element on right (A[mid] < A[mid+1]), move right
+    c) if there is a larger element on left (A[mid] < A[mid-1]), move left
 
-Time: O(log N), Space: O(1)
+    Moving in the direction of smaller element may or may not result in a peak.
+    But moving in the direction of larger element guarantees a peak.
+    Hence, if we are not at a peak already, we always move in the direction of larger element.
+
+    Time: O(log N), Space: O(1)
 '''
 from typing import List
 
