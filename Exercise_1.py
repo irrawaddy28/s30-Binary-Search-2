@@ -27,9 +27,7 @@
            https://youtu.be/E7HoVIf26ns?t=68
 
 '''
-def binary_search_first(A, tgt):
-    s = 0
-    e = len(A) - 1
+def binary_search_first(A, tgt, s, e):
     while s <= e:
         mid = s + (e-s) // 2
         if A[mid] == tgt:
@@ -43,10 +41,8 @@ def binary_search_first(A, tgt):
             e = mid - 1
     return -1
 
-def binary_search_last(A, tgt):
+def binary_search_last(A, tgt, s, e):
     N = len(A)
-    s = 0
-    e = N - 1
     while s <= e:
         mid = s + (e-s) // 2
         if A[mid] == tgt:
@@ -65,10 +61,10 @@ def search_range(A, tgt):
     if N == 0:
         return [-1,-1]
 
-    first = binary_search_first(A, tgt)
+    first = binary_search_first(A, tgt, 0, N-1)
     if first == -1:
         return [-1,-1]
-    last = binary_search_last(A, tgt)
+    last = binary_search_last(A, tgt, first, N-1)
 
     return [first, last]
 
