@@ -25,6 +25,7 @@ Solution:
     a) If mid is greater than neighboring elements, then mid is a peak.
     b) If there is a larger element on right (A[mid] < A[mid+1]), move right
     c) if there is a larger element on left (A[mid] < A[mid-1]), move left
+    d) If there is a larger element on both sides, we can move on either side. eg. [1,2,1,0,5,6,4], mid = 3, A[mid] = 0. Now, A[mid]<1 and A[mid]<5
 
     Moving in the direction of smaller element may or may not result in a peak.
     But moving in the direction of larger element guarantees a peak.
@@ -38,7 +39,7 @@ class Solution:
     def findPeakElement(self, A: List[int]) -> int:
         N = len(A)
         if N == 0:
-            return float('-inf')
+            return -1
         elif N == 1:
             return 0
 
@@ -47,12 +48,17 @@ class Solution:
         while s <= e:
             mid = s + (e-s)//2
 
-            # edge cases: index 0 or index N -1 is a peak
-            if (mid == 0 and A[mid]>A[mid+1]) or (mid == N-1 and A[mid]> A[mid-1]):
-                return mid
+            # # edge cases: index 0 or index N -1 is a peak
+            # if (mid == 0 and A[mid]>A[mid+1]) or (mid == N-1 and A[mid]> A[mid-1]):
+            #     return mid
 
-            # peak element
-            if A[mid] > A[mid+1] and A[mid] > A[mid-1]:
+            # # peak element
+            # if A[mid] > A[mid+1] and A[mid] > A[mid-1]:
+            #     return mid
+
+            # 0th index or last index of array is the peak or
+            # any in-between element is the peak
+            if (mid==0  or A[mid]>A[mid-1]) and (mid==N-1 or A[mid]>A[mid+1]):
                 return mid
 
             # if larger element on right (A[mid] < A[mid+1]), move right
@@ -61,7 +67,7 @@ class Solution:
                 s = mid + 1
             elif A[mid] < A[mid-1]:
                 e = mid - 1
-        return float('-inf')
+        return -1
 
 arrays = [ [1,2,1,3,5,6,4],
           [1,2,3,1],
@@ -70,7 +76,8 @@ arrays = [ [1,2,1,3,5,6,4],
           [-1,2,0],
           [17,0],
           [0,17],
-          [2]]
+          [2],
+          [1,2,1,0,5,6,4]]
 sol = Solution()
 for A in arrays:
     m = sol.findPeakElement(A)
